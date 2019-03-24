@@ -55,7 +55,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                     </div>
                     <div className="col-12 col-md-5 m-1">
                         < RenderComment comments={props.comments} />
-                        <CommentForm />
+                        <CommentForm dishId={props.dish.id} addComment={props.addComment} />
                     </div>
                 </div>
 
@@ -80,7 +80,7 @@ export class CommentForm extends Component {
         super(props)
 
         this.state = {
-            isModalOpen: false
+            isModalOpen: false,
         };
 
         this.toggleModal = this.toggleModal.bind(this);
@@ -92,14 +92,16 @@ export class CommentForm extends Component {
     }
 
     handleSubmit(values){
+        console.log(values);
+        console.log(values.comment);
+        console.log(this.props.dishId);
+        console.log(values.rating);
+        console.log(this.props);
         this.toggleModal();
-
-        console.log('comment:', values);
-        alert('comment:' + JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.message);
     }
 
     render() {
-        console.log('working');
         return (
             <div>
                 <Button outline onClick={this.toggleModal}>
@@ -115,7 +117,7 @@ export class CommentForm extends Component {
                                     <Row className="form-group">
                                         <Label htmlFor="rating">Rating</Label>
                                         <Col md={10}>
-                                            <Control.select model=".rating" name="rating" className="form-control" >
+                                            <Control.select model=".rating" name="rating" className="form-control" value="1">
                                                 <option>1</option>
                                                 <option>2</option>
                                                 <option>3</option>
@@ -128,7 +130,7 @@ export class CommentForm extends Component {
                                     <Row className="form-group">
                                         <Label htmlFor="author" md={2}>Your name</Label>
                                         <Col md={10}>
-                                            <Control.text model=".author" id="author" name="author" placeholder="Author" className="form-control" validators={{ required, minLength:  minLength(3), maxLength: maxLength(15)}} />
+                                            <Control.text model=".author"  name="author" placeholder="Author" className="form-control" validators={{ required, minLength:  minLength(3), maxLength: maxLength(15)}} />
                                             <Errors className="text-danger" model=".author" show="touched" messages={{ required: 'Required', minLength: 'Must be greater than 3 characters', maxLength: 'Must be 15 charaters or less'}} />
                                         </Col>
                                     </Row>

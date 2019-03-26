@@ -4,7 +4,7 @@ export const Dishes = (state= {
     isLoading: true,
     errMess: null,
     dishes: []
-}, action) => {
+    }, action) => {
     switch(action.type) {
         case ActionTypes.ADD_DISHES:
             return {...state, isLoading: false, errMess: null, dishes: action.payload};

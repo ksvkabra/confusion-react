@@ -3,6 +3,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
     function RenderComment({comments}) {
         if(comments !=null){
@@ -29,7 +30,7 @@ import { Loading } from './LoadingComponent';
         return (
             <div className="col-12 ccol-md-5 m-1">
                 <Card body className="text-left" >
-                    <CardImg top src={dish.image} alt={dish.name} />
+                    <CardImg top src={baseUrl + dish.image} alt={dish.name} />
                     <CardBody>
                         <CardTitle>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>
@@ -74,7 +75,7 @@ import { Loading } from './LoadingComponent';
                         </div>
                         <div className="col-12 col-md-5 m-1">
                             < RenderComment comments={props.comments} />
-                            <CommentForm dishId={props.dish.id} addComment={props.addComment} />
+                            <CommentForm dishId={props.dish.id} postComment={props.postComment} />
                         </div>
                     </div>
 
@@ -117,7 +118,7 @@ export class CommentForm extends Component {
         console.log(values.rating);
         console.log(this.props);
         this.toggleModal();
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.message);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.message);
     }
 
     render() {
